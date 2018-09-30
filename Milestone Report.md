@@ -11,9 +11,9 @@ Around this time, I found about Will Schreefer's "draft-toolkit". It contains bo
 ## Data Exploration
 In order to understand which variables perform the best at predicting future NBA success and draft position, I split the data into 2 sets. The first set contains the final college season stats of all NCAA players that went on to be drafted. The second dataset contains the rookie season stats of every NBA players. From there, I compared the college averages of certain stats to the stats of the same player in there rookie season. I also looked at how age playes a role in where a player gets selected. 
 
-### 
+### Where AreCollege Players Going After Graduation?
 <p align="center"> 
-<img src="/assets/PctPro.png">
+<img src="/assets/PctdPro.png">
 <p align="center"><b> Figure 1: Percentage Distribution of College Players to Professional Leagues </b>
 </p>
 
