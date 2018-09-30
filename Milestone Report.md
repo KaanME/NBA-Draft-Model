@@ -48,4 +48,8 @@ A couples stats that don't seeme to be strong indicators of NBA performance is a
 <p align="center"><b> Figure 4: Average Draftee Age by Pick </b>
 </p>
 
+<p align="center"> 
+<img src="/assets/CollegePtsSpread.png">
+<p align="center"><b> Figure 5: Distribution of PPG Of Pre-NBA College Players </b>
+</p>
 
