@@ -33,6 +33,19 @@ The first step in understanding which stats translate from college to the pros i
 
 I chose the 5 main box score stats (Points, Assists, Rebounds, Steals, and Blocks), their related percentage stats, as well as 2 advanced stats in Player Efficiency Rating (PER) and Win Shares (WS) to see what carried over. Looking through each plot, the 2 stats that really stand out are Rebound Percentage and Block Percentage, which both had PEarson Correlation coefficents greater than .82. Rebound percentage is the percentage of available rebounds that a player grabbed while he was on the floor. On the other hand, block percentage is the percentage of opponent 2 point attempts blocked by the player while he was on the floor. These high correlation numbers tell us that if a player, presumeably a big man, grabs a high percentage of rebounds in college, he'll likely grab a high percentage of them in the NBA as well. The reason why the correlation is higher for the percentage stats, rather than the raw averages, is because the percentage stats look only at the time that the player sees the floor. Rookies tend to not get as many minutes in the pros than they are used to in college, so the overall numbers are far more likely to go down. 
 Another statistic with a seemingly high colelge to rookie season correlation is Assist Percentage, with a pearson correlation cefficient of .793. Much like rebounding and blocks, assist percentage is defined as the percentage of field goals made by the team that the player assisted while he was in the game. This tells us the if a player is responsible for a large portion of his teams baskets in college, he will tend to have a similar effect in the game when he transitions to the pros. 
+
 A couples stats that don't seeme to be strong indicators of NBA performance is average points per game, true shooting percentage, and PER. Raw points per game averages not translating can be justified by the fact that most nba players were the stars of their college squads. The ahd a lot more oppurtunity to score in college than they do in the NBA. However, unlike blocks, rebounds, and assists, the efficiency metric for shooting, true shooting percentage, doesn't correlate better. True shooting percentage takes into account 2 point, 3 point, and free throw shooting percentages and normalizes for 3 pointers being worth more points and free throws not being counted in traditional field goal percentage. 
+
+## Age of Draftees
+
+<p align="center"> 
+<img src="/assets/draftAgeOverTime.png">
+<p align="center"><b> Figure 3: Average Draftee Age Over Time </b>
+</p>
+
+<p align="center"> 
+<img src="/assets/AgeByDraftPick.png">
+<p align="center"><b> Figure 4: Average Draftee Age by Pick </b>
+</p>
 
 
