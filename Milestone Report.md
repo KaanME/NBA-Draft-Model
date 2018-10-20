@@ -51,10 +51,7 @@ In Figure 3 we saw the average age of each draft group ofver time, but the impor
 <p align="center"><b> Figure 4: Average Draftee Age by Pick </b>
 </p>
 
-<p align="center"> 
-<img src="/assets/CollegePtsSpread.png">
-<p align="center"><b> Figure 5: Distribution of PPG Of Pre-NBA College Players </b>
-</p>
+
 
 
 ## Limitations 
@@ -63,5 +60,6 @@ This analysis only takes into consideration players who played in the NCAA and w
 
 ## Next Steps
 
+A few steps will follow as the project moves towards the modelling stage. I will create more features, such as per 36 minutes statistics, as well as features that are just 2 stats multiplied together. The best scorers, rebounders, and playmakers will be projected, as well as a few all encompassing statistics. Rookie year and third year stats will be modelled.
 
 
