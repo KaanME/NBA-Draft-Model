@@ -53,128 +53,122 @@ In Figure 3 we saw the average age of each draft group ofver time, but the impor
 
 ## Machine Learning
 This is no definitive or objective ranking that anyone that can say is the correct order in which college players should be drafted. Comparing your own rankings to where players were actually picked is a flawed process because that assumes all the picks made were the correct ones. We consistently see players like Kawhi Leanord, Giannis Antetokounmpo, and Rudy Gobert (drafted 15, 15, and 27, respectively) come out of the draft and highly outperform players that were taken ahead of them. A statistical model will also never capture the emotional intelligence, work ethic, and mental understanding of the game. Some things you just need an actual scout to go and watch the games. 
-This process will attempt to predict the best performers in different areas of the game: shooting (true shooting percentage), playmaking (assist percentage), rebounding (rebound percentage), steals (steal percentage), and best shot blocker (block percentage). I will also be projecting a few “all-encompassing” stats to add to the rankings, including Player Efficiency Rating (PER), Offensive Win Shares per 48 minutes (OWS_p48), and Defensive Win Shares per 48 minutes (DWS_p48). The averages of the ranking of each statistic will be taken and ordered to create a new draft order.  
-
-There are two separate sets of the data that the target variable is coming from, the rookie year season of each players and their third year in the league. Rookie seasons are generally sporadic and don ‘t capture what the players can develop into in the future, but there is value in understanding who has the potential to become an immediate contributor. The third year of an NBA player is generally when they have a breakout season and they are still on their rookie scale deal. 
+This process will attempt to predict the best performers in different areas of the game: shooting (true shooting percentage), playmaking (assist percentage), rebounding (rebound percentage), steals (steal percentage), and best shot blocker (block percentage). I will also be projecting an “all-encompassing” stat called Player Efficiency Rating (PER). Lastly, the target variable will be the draft pick itself. 
+Rookie seasons are generally sporadic and don ‘t capture what the players can develop into in the future, but there is value in understanding who has the potential to become an immediate contributor. Generally, the best players end up being better from the get go.
 
 ### Models
-Four different models were trained with the same feature for the two set of target statistics: ridge, lasso, stochastic gradient descent, and random forest. The features used are made up of NCAA counting stat averages (points, assists, rebounds, etc.), those same stats but normalized to per 36 minute figures, advanced percentage statistics (true shooting %, assist %, etc.), a few all-encompassing stats (‘per’, ‘win shares’,) several features that are just two counting stats multiplied together. For the rookie year projections, data from rookie seasons from the 2003-04 to the 2015-2016 seasons were used to train the data. The predictions were tested against rookies from the 2016-2017 season and then applied to predict the target variable for the 2018 draft class. For the third year projections, since players drafted within the last 2 years don’t have a third year, the models were trained on players from the 2003-04 to the 2013-14 seasons. The test data is from the 2014-15 season and the predictions are still for the same 2018 draft class. 
-I tuned each of the 4 models using a grid search on a few of their respective parameters. You can find the details in my [Models Notebook](LINK). Figure 4 shows the r-squared value that each of the four models came up with for each of the statistics we were looking at. 
+Four different models were trained with the same feature for the two set of target statistics: ridge, lasso, stochastic gradient descent, and random forest. The features used are made up of NCAA counting stat averages (points, assists, rebounds, etc.), those same stats but normalized to per 36 minute figures, advanced percentage statistics (true shooting %, assist %, etc.), a few all-encompassing stats (‘per’, ‘win shares’,) several features that are just two counting stats multiplied together. For the rookie year projections, data from rookie seasons from the 2003-04 to the 2015-2016 seasons were used to train the data. The predictions were tested against rookies from the 2016-2017 season and then applied to predict the target variable for the 2018 draft class. 
+I tuned each of the 4 models using a grid search on a few of their respective parameters. You can find the details in my [Models Notebook](https://github.com/KaanME/NBA-Draft-Model/blob/master/Models.ipynb). Figure 5 shows the r-squared value that each of the four models came up with for each of the statistics we were looking at. 
  
-In Figure 5 we can see that the highest R-squared values came from rebound percentage, assist percentage, and black percentage. These results match up with the correlation we saw in the scatter plots in the Figure 2. The bolded numbers in Figure 5 show the model we will be using for each statistic.
+In Figure 5 we can see that the highest R-squared values came from rebound percentage, assist percentage, and block percentage. These results match up with the correlation we saw in the scatter plots in the Figure 2. The bolded numbers in Figure 5 show the model we will be using for each statistic.
 
 <p align="center"> 
-<img src="/assets/rookr2.png">
+<img src="/assets/r-squared.png">
 <p align="center"><b> Figure 5: R-squared values for Rookie Season Projections By Model by Stat</b>
 </p>
 
 
 #### True Shooting Percentage
-True Shooting percentage had the lowest R-squared value among all the stats at .107, meaning the features we chose don’t do a good job of explaining the variance in this statistic. The mean squared error we see in the true shooting percentage for the test set is roughly 6%. A 6% swing in true shooting percentage can be quite a large improvement or a huge decline for any given player. Figure 6 shows the top 10 projected players in true shooting for last years draft class.
+True Shooting percentage had the lowest R-squared value among all the stats at .102, meaning the features we chose don’t do a good job of explaining the variance in this statistic. The mean squared error we see in the true shooting percentage for the test set is roughly 20%. A 20% swing in true shooting percentage can be quite a large improvement or a huge decline for any given player. Figure 6 shows the top 10 projected players in true shooting for last years draft class.
 
 <p align="center"> 
 <img src="/assets/ts_pctTest.png">
 <p align="center"><b> Figure 6: Projected True Shooting Percentage 2017 Rookie Class</b>
 </p>
  
-We can see players like John Collins and Zach Collins, both big men who can shoot, appearing on the top of this list. The null values appear for players who didn’t play in their rookie years. Rim-bound big-men with lower usage like Jordan Bell and Bam Adebayo appear here as well since a large percentage of their shot are dunks and layups. This makes their true shooting higher than guards or wings whose shot profile can be more difficult. Applying this to this years draft class, we see the following players rise to the top.
+We can see players like John Collins and Zach Collins, both big men who can shoot, appearing on the top of this list. The null values appear for players who didn’t play in their rookie years. Rim-bound big-men with lower usage like Jordan Bell and Bam Adebayo appear here as well since a large percentage of their shot are dunks and layups. This makes their true shooting higher than guards or wings whose shot profile can be more difficult. Applying this to this years draft class, we limited the player pool to players who averaged 5 or more  field goal attempts a game. If a big man shoots 70% on 2 attempts a game, he might rise to the top of this list even though he might not be a legitimate draft candidate. 
+
+<p align="center"> 
+<img src="/assets/ts_pctHold.png">
+<p align="center"><b> Figure 7: Projected True Shooting Percentage 2018 Rookie Class</b>
+</p>
+
+We can see in Figure 6 the 2018 draft class true shooting percentage projections. The top 4 players on the list were drafted 4th, 1st, 7th, and 2nd, respectively. Jaren Jackson, Ayton, and Wendell Carter are all big men who can play near the basket and also knock down the occasional 3 pointer. It makes sense that they would project to be at the top of an scoring effiency projection.
 
 #### Assist Percentage
-Assist percentage was best estimated using a random forest regressor. The R-squared value for this metric was .679 and the average error came out to be 4.5%. The results for last years draft can be seen in Figure 7. We can see that when applied 2017 rookies, pass first point guards like Lonzo Ball and Monte Morris jump to the top of the list. One thing to note on this list, 4 of the top 9 picks in the draft are all in the top 7 in projected rookie assist percentage (Lonzo Ball-2, Dennis Smith-9, De'Aaron Fox-5, Markell Fultz-1). Also, the lowest lever of play any of these guys reached is a 2-way contract with an NBA team, which shows that point guard play was a theme for success in that class.
+Assist percentage was best estimated using a random forest regressor. The R-squared value for this metric was .415 and the average error came out to be 4.5%. The results for last years draft can be seen in Figure 8. We can see that when applied 2017 rookies, pass first point guards like Juwan Evans and Lonzo Ball jump to the top of the list. One thing to note on this list, 4 of the top 9 picks in the draft are all in the top 5 in projected rookie assist percentage (Lonzo Ball-2, Dennis Smith-9, De'Aaron Fox-5, Markell Fultz-1). Also, the lowest lever of play any of these guys reached is a 2-way contract with an NBA team, which shows that point guard play was a theme for success in that class.
 
 <p align="center"> 
 <img src="/assets/ast_pctTest.png">
-<p align="center"><b> Figure 7: Projected Assist Percentage 2017 Rookie Class</b>
+<p align="center"><b> Figure 8: Projected Assist Percentage 2017 Rookie Class</b>
 </p>
 
-The 2017 and 2018 class contrast
+The 2018 class had one transendent passer throughout the season, and that was Trae Young. We can see in Figure 9that he has risen to the top of this list with a projected rookie assist percentage of 29.6. At the time of writing this, he is 8th in the entire NBA at 34.4% of his possessions ending in an assist. Jevon Carter and Devonte Graham are 2 other names that stick out in this top 10 as NBA players that are a bit lower in the rotation of their respective teams. 
 
 <p align="center"> 
 <img src="/assets/ast_pctHold.png">
-<p align="center"><b> Figure 8: Projected Assist Percentage 2018 Rookie Class</b>
+<p align="center"><b> Figure 9: Projected Assist Percentage 2018 Rookie Class</b>
 </p>
 
 
 #### Rebound Percentage
-Assist percentage was best estimated using a random forest regressor. The R-squared value for this metric was .679 and the average error came out to be 4.5%. The results for last years draft can be seen in Figure 8.
+Rebound percentage had the 3rd highest R-squared value of the statitics at .288 with an average error of 4%.  Looking at rebound percentage for both the 2017 and 2018 classes, we can start to see a contrast between the two years. We saw a mixture of stretch big men and gueards in the top 10 for true shooting percentage and an inceredibly strong top 10 in assist percentage for the 2017 draft class. The rebound percentage for that class is noticeably weaker. Looking at Figure 10, while players like Caleb Swanigan and John Collins are solid NBA players, they don't have the star potential that the 2018 rebound percentage leaders have. Even a wing like Josh Jackson snuck in the top 10, which shows that in terms of rebounding in the NBA, the 2017 class would not produce much. 
 
 <p align="center"> 
 <img src="/assets/reb_pctTest.png">
-<p align="center"><b> Figure 9: Projected Rebound Percentage 2017 Rookie Class</b>
+<p align="center"><b> Figure 10: Projected Rebound Percentage 2017 Rookie Class</b>
 </p>
+
+The 2018 class is a different story. Just looking at the projections, we can see that the 9th best guy in 2018 would rank 4th in 2017. The top 3 guys in Figure 11 all were drafted in the top 7 of the 2018 draft, and Mohamed Bamba was drafted 6th. These rankings tell us that the 2018 draft class was filled with great rebounder that were also great overall players, and we will see that even more when we look at the player efficiency projections.
 
 <p align="center"> 
 <img src="/assets/reb_pctHold.png">
-<p align="center"><b> Figure 10: Projected Rebound Percentage 2018 Rookie Class</b>
+<p align="center"><b> Figure 11: Projected Rebound Percentage 2018 Rookie Class</b>
 </p>
 
-#### Steal Percentage
-Assist percentage was best estimated using a random forest regressor. The R-squared value for this metric was .679 and the average error came out to be 4.5%. The results for last years draft can be seen in Figure 8.
 
-<p align="center"> 
-<img src="/assets/stl_pctTest.png">
-<p align="center"><b> Figure 11: Projected Steal Percentage 2017 Rookie Class</b>
-</p>
-
-<p align="center"> 
-<img src="/assets/stl_pctHold.png">
-<p align="center"><b> Figure 12: Projected Steal Percentage 2018 Rookie Class</b>
-</p>
-
-#### Block Percentage
-Assist percentage was best estimated using a random forest regressor. The R-squared value for this metric was .679 and the average error came out to be 4.5%. The results for last years draft can be seen in Figure 8.
-
-<p align="center"> 
-<img src="/assets/blk_pctTest.png">
-<p align="center"><b> Figure 13: Projected Block Percentage 2017 Rookie Class</b>
-</p>
-
-<p align="center"> 
-<img src="/assets/blk_pctHold.png">
-<p align="center"><b> Figure 14: Projected Block Percentage 2018 Rookie Class</b>
-</p>
 
 #### PER Percentage
-Assist percentage was best estimated using a random forest regressor. The R-squared value for this metric was .679 and the average error came out to be 4.5%. The results for last years draft can be seen in Figure 8.
+Player Efficiency Rating, or PER, is an all encompassing, per minute statistic that John Hollinger came up with in the early 2000's. The league average PER is alway at 15.0, the positive statistics add to the number while the negative statistics like turnovers subtract from it. The Lasso regression performed best in terms of the R-squared value for the rookie years of the 2017 draft class. In Figure 12 we see that The efficient shooting, high rebound percentage big men duo of John and Zach Collins appear at the top of the list. John Collins outperformed his projection which Zach underperformed, although he is currently having a nice start to his sophomore season through 7 games. We also see multifaceted, lengthy point guards like Lonzo Ball and Markelle Fultz project to be top 5 in PER for their class. 
 
 <p align="center"> 
 <img src="/assets/perTest.png">
-<p align="center"><b> Figure 15: Projected Per Percentage 2017 Rookie Class</b>
+<p align="center"><b> Figure 12: Projected Per Percentage 2017 Rookie Class</b>
 </p>
+
+figure 13 shows us how the 2018 class is projected to perform in PER. The top 4 spots are the same players that led the way in true shooting percentage. This time, Trae Young also slides into the top 10, as his playmaking abilities and long range shooting prowess work in favor of him having a high efficiency rating. There is more of a mix of big men and guards in this metric becuase there is more than one way to rack of stats. One thing to note overall however, is that none of the rookies in either class project to be an above average player in terms of PER. This tells us that even the best rookies struggle to make a positive impact for their teams right out of the college.
 
 <p align="center"> 
 <img src="/assets/perHold.png">
-<p align="center"><b> Figure 16 : Projected Per Percentage 2018 Rookie Class</b>
+<p align="center"><b> Figure 13: Projected Per Percentage 2018 Rookie Class</b>
 </p>
 
 #### Projecting Pick
-Assist percentage was best estimated using a random forest regressor. The R-squared value for this metric was .679 and the average error came out to be 4.5%. The results for last years draft can be seen in Figure 8.
+The final step in this process is to project where each player will be selected. The same process was used to project the pick as the other metrics, but the players actual draft pick was used as the target variable. The ridge regression model provided the highest R-squared value at .553, which was also the highest number among all the statistics we looked at. To understand what factors were most prominent in projecting drafting pick, take a look at Figure 14. This table shows the top 10 features with the highest regression coefficients when modeling draft pick. The top 3 factors are all related to how old the player is. This tells us that teams value the ability to train and develop players from a younger age, and supports the stories we explored in the Data Exploration section. As far as on the court statistics, getting to the line and hitting free throws are important as free throw percentage (ft_pct) and free throw rate (ft_fga) are both in the top 3 after age related features. Rebounding, 3 points attempted, and steal to turnover ration (stl_to) round out the top ten. There is a solid mix of big man and guard oriented skills in the table.
+
+<p align="center"> 
+<img src="/assets/pickfts.png">
+<p align="center"><b> Figure 14: Top 10 Feaures for Projecting Draft Position</b>
+</p>
+
+Applying the model to the 2017 draft class, Lonzo Ball ranks as the number 1 prospect. Ball is an all around talent who can shoot, rebound, pass, and play defense. He pushed UCLA to a top ranked offense, was picked #2 in the real draft. A few surprises in the top 15 do stand out. Numbers 5 and 6 on this list are T.J. Leaf and Justin Patton. Both were picked just outside the lottery, and neither produced much in there rookie years. Justin Patton was sidelined with a foot injury, so who know what could've been, but T.J. Leaf is a three point shooting big man who doesn't do much else in the NBA. His athletic limitation didn't hurt him as much in college, which is most likely why he ranks so high in this model. Lauri Markkanen also fits the same player archetype as T.J. Leaf, but he has shown to be much more athletic and versatile in his rookie year. He was selected to the All-Rookie First Team, so it is encouraging that the model ranks him so highly. The biggest miss of the model has to be the exclusion of Donovan Mitchell in the top 15. He comes in at 25 in the model, but was quite easily a top 3 rookie last year. Being a Junior coming out of college really hurt his stock in the model, as well as his undeveloped shooting efficiency. There are always statistical anomalies, and that is where scouting and the "eye-test" come into play.
 
 <p align="center"> 
 <img src="/assets/pickTest.png">
 <p align="center"><b> Figure 15: Projected Pick 2017 Rookie Class</b>
 </p>
 
+For the 2018 class, there is nothing to compare the ranking to besides where they were actually selected in the draft, and my own subjective evaluation of the players. The final results show the models first three picks align with who the Suns, Kings, and Hawks selected in the actual draft. The top rated rebounders and true shooting percentage leaders make up 5 of the top 6 projected picks here. Udoka Azubuike did not enter the draft and returned to college for another year, so keeping an eye on his performance this year and how he ranks against the new batch of college Freshman will be interesting. With age being so important in this model, staying for one more year could see him fall, same story applies to Jontay Porter (who incidentally tore his ACL and MCL before the start of the 18-19 season) and Ja Morant. A couple more noteworthy players in this top 15 are Zhaire Smith and Mikal Bridges. Mikal was selected 10th overall by Philadelphia, Zhaire fell to 16 to the Suns, but the Suns offered a 1st round pick and Zhaire to Philly for Mikal. In this model, Zhaire ranks higher than Mikal. These types of decision make or break careers, and if Zhaire Smith turns out to have a better first couple years than Mikal Bridges, the trade decision by the Suns will look awful, while Philly could come out with the better player AND an extra pick. 
+
 <p align="center"> 
 <img src="/assets/pickHold.png">
 <p align="center"><b> Figure 16 : Projected Pick 2018 Rookie Class</b>
 </p>
 
-## Limitations 
-
-This analysis only takes into consideration players who played in the NCAA and went on to play professionally elsewhere. Any college player who ended there career there was not included. International players were also not included in this analysis. The statistical profiles of players who were drafted before 2003 were not used for this analysis either. 
-
-## Next Steps
-
-A few steps will follow as the project moves towards the modelling stage. I will create more features, such as per 36 minutes statistics, as well as features that are just 2 stats multiplied together. The best scorers, rebounders, and playmakers will be projected, as well as a few all encompassing statistics. Rookie year and third year stats will be modelled.
-
-
 
 ## Limitations 
 
-This analysis only takes into consideration players who played in the NCAA and went on to play professionally elsewhere. Any college player who ended there career there was not included. International player were also not included in this analysis. The statistical profiles of players who were drafted before 2003 were not used for this analysis either. 
+This analysis only takes into consideration players who played in the NCAA and went on to play professionally elsewhere. Any college player who ended there career there was not included. International players were also not included in this analysis. The statistical profiles of players who were drafted before 2003 were not used for this analysis either. The college data for players that played before the 2017-18 season only included those who ended up playing professionally somewhere, while everyone who played in a Division 1 school last season was included. The accuracy of the projection for players from last year obviously could not be computed becuase they haven't played a season in the NBA yet. This limits our ability to understand how well the model is performing until long after the pick is actually made. This is the challenge for NBA Front Offices, and the same challenges apply here.
 
 ## Next Steps
 
-A few steps will follow as the project moves towards the modelling stage. I will create more features, such as per 36 minutes statistics, as well as features that are just 2 stats multiplied together. The best scorers, rebounders, and playmakers will be projected, as well as a few all encompassing statistics. Rookie year and third year stats will be modelled.
+The next steps to this analysis will come in a variety of methods. First, international players must be added to the pool of draftable players. Complications arise with international players because of the fact that the level of competition in professional leagues overseas is much higher than college basketball here in the U.S. Clustering players and then projecting there stats could make for more accurate predictions for each metric. Factoring in college seasons before there final year would provide more information about older players. If a guy improves every year, he's probably more likely to improve beyond college versus a guy with great stats but stays steady all 3 or 4 years. Model other all encompassing statistics like Real Plus Minus (RPM), Box Plus Minus (BOM), and combine them into one metric that ranks all players. Apply play by play data to the model to get more granular information about a plyayer and understand what kind of plays lead to more successful NBA players. All of these steps will be taken one by one.
+
+## Conclusion
+
+The unpredictability of a players emotional intelligence, his worth ethic, and off the court influences can play a huge role in how good a player can become. This model starts to tell part of the story, and maybe a significant portion of the story, through the statistical profile of NBA prospects. The entire story can not be told without in person scouting, interviews, and background checks. "Feel for the game" is also extremely hard to quantify, but can lead to a statistically average player to have a long and successful career. We did learn a few things about the historical nature of the draft. Younger players are more desirable to NBA teams because they have more time to develop within an NBA training program in NBA facilities. There are certain stats that carry over more successfully from college to the pros than others, such as rebounding and steals. This could be attributed to rebounding and stealing the ball being more effort oriented, and if you have a high motor in college, you will probably have a high motor in the NBA as well (or maybe in the case of rebounding, if your tall, your going to stay tall). Many follow up items will come from this project, but this gives us a solid base to understand who the best players in each class are. Nailing the second round picks is where things will get trickier.
+
+
+
+
 
